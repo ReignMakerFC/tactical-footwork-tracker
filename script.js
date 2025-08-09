@@ -2,12 +2,13 @@ function getNextTrainingDate() {
     const today = new Date();
     const nextDate = new Date(today);
     
-    // Keep adding days until we hit a Thursday or Saturday
+    // Keep adding days until we hit a Friday or Sunday
     while (true) {
         nextDate.setDate(nextDate.getDate() + 1);
-        if (nextDate.getDay() === 5 || nextDate.getDay() === 0) { // 4 is Thursday, 6 is Saturday
+        if (nextDate.getDay() === 5 || nextDate.getDay() === 0) { // 5 is Friday, 0 is Sunday
             break;
         }
+    }   // Added missing closing brace here
     
     return nextDate.toLocaleDateString('en-US', { 
         weekday: 'long',
