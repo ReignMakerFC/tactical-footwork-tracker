@@ -10,7 +10,6 @@ function getAugust2025Activities() {
                 id: august2025.getTime(),
                 title: "20 Min Footwork",
                 date: new Date(august2025),
-                time: "16:00",
                 description: "Dribble through cones, alternate feet, use inside, outside, and bottom of feet. Juggle for 1 minute. Repeat 5 times.",
                 completed: false,
                 notes: ""
@@ -31,6 +30,19 @@ function displayActivities() {
     const activityList = document.getElementById('activity-list');
     activityList.innerHTML = '';
     
+    // Get current date
+    const today = new Date();
+    const currentDayOfWeek = today.getDay();
+    
+    // If not Thursday or Saturday, display "No Footwork Training Today"
+    if (currentDayOfWeek !== 4 && currentDayOfWeek !== 6) {
+        const noTrainingMessage = document.createElement('div');
+        noTrainingMessage.className = 'activity-card';
+        noTrainingMessage.innerHTML = '<h3>No Footwork Training Today</h3>';
+        activityList.appendChild(noTrainingMessage);
+        return;
+    }
+
     activities.forEach(activity => {
         const card = document.createElement('div');
         card.className = `activity-card ${activity.completed ? 'completed' : ''}`;
@@ -46,18 +58,16 @@ function displayActivities() {
         card.innerHTML = `
             <h3>${activity.title}</h3>
             <p class="date">${formattedDate}</p>
-            <p class="time">Time: ${activity.time}</p>
             <div class="description">
                 <strong>Instructions:</strong><br>
                 ${activity.description}
             </div>
             <div class="completion-section">
-                <label class="completion-label">
-                    <input type="checkbox" 
-                           ${activity.completed ? 'checked' : ''} 
-                           onchange="toggleCompletion(${activity.id})">
-                    Mark as Completed
-                </label>
+                <button onclick="markComplete(${activity.id})" 
+                        ${activity.completed ? 'style="display:none"' : ''}>
+                    Complete
+                </button>
+                ${activity.completed ? '<p class="completion-message">Good Job!</p>' : ''}
             </div>
             <textarea class="notes" 
                       placeholder="Add session notes here..."
@@ -69,10 +79,10 @@ function displayActivities() {
     });
 }
 
-function toggleCompletion(id) {
+function markComplete(id) {
     const activity = activities.find(a => a.id === id);
     if (activity) {
-        activity.completed = !activity.completed;
+        activity.completed = true;
         localStorage.setItem('activities', JSON.stringify(activities));
         displayActivities();
     }
