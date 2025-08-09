@@ -1,3 +1,4 @@
+// updated aug 2025
 function getAugust2025Activities() {
     const activities = [];
     const august2025 = new Date(2025, 7, 1); // Start with August 1, 2025
