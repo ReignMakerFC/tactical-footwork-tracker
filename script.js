@@ -8,7 +8,7 @@ function getNextTrainingDate() {
         if (nextDate.getDay() === 5 || nextDate.getDay() === 0) { // 5 is Friday, 0 is Sunday
             break;
         }
-    }   // Added missing closing brace here
+    }
     
     return nextDate.toLocaleDateString('en-US', { 
         weekday: 'long',
@@ -28,17 +28,18 @@ function displayActivity() {
         year: 'numeric'
     });
     
-    // Display the date
-    document.getElementById('currentDate').textContent = formattedDate;
-
-    const activityList = document.getElementById('activity-list');
-    activityList.innerHTML = '';
-    
     // Get current day of week
     const dayOfWeek = today.getDay();
     
-    // If not training day, show next training date
+    // Get header and date elements
+    const trainingHeader = document.getElementById('trainingHeader');
+    const currentDate = document.getElementById('currentDate');
+    const activityList = document.getElementById('activity-list');
+    
+    // If not training day, hide header and date, show next training date
     if (dayOfWeek !== 5 && dayOfWeek !== 0) {
+        trainingHeader.style.display = 'none';
+        currentDate.style.display = 'none';
         const nextTrainingDate = getNextTrainingDate();
         activityList.innerHTML = `
             <div class="activity-card">
@@ -48,7 +49,11 @@ function displayActivity() {
         return;
     }
 
-    // If it is a training day, show the activity
+    // If it is a training day, show header, date and activity
+    trainingHeader.style.display = 'block';
+    currentDate.style.display = 'block';
+    currentDate.textContent = formattedDate;
+    
     activityList.innerHTML = `
         <div class="activity-card">
             <h3>20 Min Footwork</h3>
