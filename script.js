@@ -7,7 +7,10 @@ function displayActivity() {
         day: 'numeric',
         year: 'numeric'
     });
-    document.getElementById('todayDate').textContent = formattedDate;
+    
+    // Display the date
+  
+    document.getElementById('currentDate').textContent = formattedDate;
 
     const activityList = document.getElementById('activity-list');
     activityList.innerHTML = '';
