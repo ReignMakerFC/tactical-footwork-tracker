@@ -20,16 +20,16 @@ function displayActivity() {
                 <strong>Instructions:</strong><br>
                 Dribble through cones, alternate feet, use inside, outside, and bottom of feet. Juggle for 1 minute. Repeat 5 times.
             </div>
+            <textarea class="notes" 
+                      placeholder="Add session notes here..."
+                      onchange="saveNotes(this.value)"
+            >${localStorage.getItem('sessionNotes') || ''}</textarea>
             <div class="completion-section">
                 <button onclick="markComplete()" id="completeButton">
                     Complete
                 </button>
                 <p id="completionMessage" style="display: none;" class="completion-message">Good Job!</p>
             </div>
-            <textarea class="notes" 
-                      placeholder="Add session notes here..."
-                      onchange="saveNotes(this.value)"
-            >${localStorage.getItem('sessionNotes') || ''}</textarea>
         </div>
     `;
 }
