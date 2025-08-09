@@ -1,9 +1,18 @@
 function displayActivity() {
+    // Set today's date
+    const today = new Date();
+    const formattedDate = today.toLocaleDateString('en-US', { 
+        weekday: 'long',
+        month: 'long',
+        day: 'numeric',
+        year: 'numeric'
+    });
+    document.getElementById('todayDate').textContent = formattedDate;
+
     const activityList = document.getElementById('activity-list');
     activityList.innerHTML = '';
     
     // Get current day of week
-    const today = new Date();
     const dayOfWeek = today.getDay();
     
     // If not Thursday (4) or Saturday (6), show "No Footwork Training Today"
