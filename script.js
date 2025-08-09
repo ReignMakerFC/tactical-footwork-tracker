@@ -30,7 +30,7 @@ function displayActivity() {
             <h3>20 Min Footwork</h3>
             <div class="description">
                 <strong>Instructions:</strong><br>
-                Dribble through cones, alternate feet, use inside, outside, and bottom of feet. Juggle for 1 minute. Repeat 5 times.
+                Dribble through cones, alternate feet. Down & back using inside of feet, down & back using outside of feet, down & back using bottom of feet. Juggle for 1 minute. Repeat 5 times.
             </div>
             <textarea class="notes" 
                       placeholder="Add session notes here..."
