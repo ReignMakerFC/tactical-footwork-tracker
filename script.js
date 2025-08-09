@@ -1,33 +1,35 @@
 function getAugust2025Activities() {
     const activities = [];
-    const august2025 = new Date(2025, 7); // Month is 0-based, so 7 = August
+    const august2025 = new Date(2025, 7, 1); // Start with August 1, 2025
     
-    // Get all dates in August 2025
-    while (august2025.getMonth() === 7) {
-        // Check if it's Thursday (4) or Saturday (6)
-        if (august2025.getDay() === 4 || august2025.getDay() === 6) {
+    while (august2025.getMonth() === 7) { // While still in August
+        const dayOfWeek = august2025.getDay();
+        // If Thursday (4) or Saturday (6)
+        if (dayOfWeek === 4 || dayOfWeek === 6) {
             activities.push({
                 id: august2025.getTime(),
                 title: "20 Min Footwork",
                 date: new Date(august2025),
-                time: "16:00", // Default time set to 4:00 PM
+                time: "16:00",
                 description: "Dribble through cones, alternate feet, use inside, outside, and bottom of feet. Juggle for 1 minute. Repeat 5 times.",
                 completed: false,
                 notes: ""
             });
         }
+        // Move to next day
         august2025.setDate(august2025.getDate() + 1);
     }
     return activities;
 }
 
-let activities = JSON.parse(localStorage.getItem('activities')) || getAugust2025Activities();
+// Clear any old data
+localStorage.clear();
+
+let activities = getAugust2025Activities();
 
 function displayActivities() {
     const activityList = document.getElementById('activity-list');
     activityList.innerHTML = '';
-    
-    activities.sort((a, b) => new Date(a.date) - new Date(b.date));
     
     activities.forEach(activity => {
         const card = document.createElement('div');
@@ -65,14 +67,13 @@ function displayActivities() {
         
         activityList.appendChild(card);
     });
-    
-    saveActivities();
 }
 
 function toggleCompletion(id) {
     const activity = activities.find(a => a.id === id);
     if (activity) {
         activity.completed = !activity.completed;
+        localStorage.setItem('activities', JSON.stringify(activities));
         displayActivities();
     }
 }
@@ -81,12 +82,8 @@ function updateNotes(id, notes) {
     const activity = activities.find(a => a.id === id);
     if (activity) {
         activity.notes = notes;
-        saveActivities();
+        localStorage.setItem('activities', JSON.stringify(activities));
     }
-}
-
-function saveActivities() {
-    localStorage.setItem('activities', JSON.stringify(activities));
 }
 
 // Initialize the display
