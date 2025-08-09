@@ -1,4 +1,9 @@
-// updated aug 2025
+function isSameDate(date1, date2) {
+    return date1.getDate() === date2.getDate() &&
+           date1.getMonth() === date2.getMonth() &&
+           date1.getFullYear() === date2.getFullYear();
+}
+
 function getAugust2025Activities() {
     const activities = [];
     const august2025 = new Date(2025, 7, 1); // Start with August 1, 2025
@@ -22,21 +27,20 @@ function getAugust2025Activities() {
     return activities;
 }
 
-// Clear any old data
-localStorage.clear();
-
 let activities = getAugust2025Activities();
 
 function displayActivities() {
     const activityList = document.getElementById('activity-list');
     activityList.innerHTML = '';
     
-    // Get current date
     const today = new Date();
-    const currentDayOfWeek = today.getDay();
     
-    // If not Thursday or Saturday, display "No Footwork Training Today"
-    if (currentDayOfWeek !== 4 && currentDayOfWeek !== 6) {
+    // Find today's activity
+    const todayActivity = activities.find(activity => 
+        isSameDate(new Date(activity.date), today)
+    );
+    
+    if (!todayActivity) {
         const noTrainingMessage = document.createElement('div');
         noTrainingMessage.className = 'activity-card';
         noTrainingMessage.innerHTML = '<h3>No Footwork Training Today</h3>';
@@ -44,40 +48,38 @@ function displayActivities() {
         return;
     }
 
-    activities.forEach(activity => {
-        const card = document.createElement('div');
-        card.className = `activity-card ${activity.completed ? 'completed' : ''}`;
-        
-        const date = new Date(activity.date);
-        const formattedDate = date.toLocaleDateString('en-US', { 
-            weekday: 'long', 
-            month: 'long', 
-            day: 'numeric', 
-            year: 'numeric' 
-        });
-        
-        card.innerHTML = `
-            <h3>${activity.title}</h3>
-            <p class="date">${formattedDate}</p>
-            <div class="description">
-                <strong>Instructions:</strong><br>
-                ${activity.description}
-            </div>
-            <div class="completion-section">
-                <button onclick="markComplete(${activity.id})" 
-                        ${activity.completed ? 'style="display:none"' : ''}>
-                    Complete
-                </button>
-                ${activity.completed ? '<p class="completion-message">Good Job!</p>' : ''}
-            </div>
-            <textarea class="notes" 
-                      placeholder="Add session notes here..."
-                      onchange="updateNotes(${activity.id}, this.value)"
-            >${activity.notes}</textarea>
-        `;
-        
-        activityList.appendChild(card);
+    const card = document.createElement('div');
+    card.className = `activity-card ${todayActivity.completed ? 'completed' : ''}`;
+    
+    const date = new Date(todayActivity.date);
+    const formattedDate = date.toLocaleDateString('en-US', { 
+        weekday: 'long', 
+        month: 'long', 
+        day: 'numeric', 
+        year: 'numeric' 
     });
+    
+    card.innerHTML = `
+        <h3>${todayActivity.title}</h3>
+        <p class="date">${formattedDate}</p>
+        <div class="description">
+            <strong>Instructions:</strong><br>
+            ${todayActivity.description}
+        </div>
+        <div class="completion-section">
+            <button onclick="markComplete(${todayActivity.id})" 
+                    ${todayActivity.completed ? 'style="display:none"' : ''}>
+                Complete
+            </button>
+            ${todayActivity.completed ? '<p class="completion-message">Good Job!</p>' : ''}
+        </div>
+        <textarea class="notes" 
+                  placeholder="Add session notes here..."
+                  onchange="updateNotes(${todayActivity.id}, this.value)"
+        >${todayActivity.notes}</textarea>
+    `;
+    
+    activityList.appendChild(card);
 }
 
 function markComplete(id) {
