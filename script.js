@@ -38,7 +38,7 @@ function displayActivity() {
     const dayOfWeek = today.getDay();
     
     // If not training day, show next training date
-    if (dayOfWeek !== 4 && dayOfWeek !== 6) {
+    if (dayOfWeek !== 5 && dayOfWeek !== 7) {
         const nextTrainingDate = getNextTrainingDate();
         activityList.innerHTML = `
             <div class="activity-card">
