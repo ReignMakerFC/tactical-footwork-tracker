@@ -1,3 +1,23 @@
+function getNextTrainingDate() {
+    const today = new Date();
+    const nextDate = new Date(today);
+    
+    // Keep adding days until we hit a Thursday or Saturday
+    while (true) {
+        nextDate.setDate(nextDate.getDate() + 1);
+        if (nextDate.getDay() === 5 || nextDate.getDay() === 7) { // 4 is Thursday, 6 is Saturday
+            break;
+        }
+    }
+    
+    return nextDate.toLocaleDateString('en-US', { 
+        weekday: 'long',
+        month: 'long',
+        day: 'numeric',
+        year: 'numeric'
+    });
+}
+
 function displayActivity() {
     // Set today's date
     const today = new Date();
@@ -9,7 +29,6 @@ function displayActivity() {
     });
     
     // Display the date
-  
     document.getElementById('currentDate').textContent = formattedDate;
 
     const activityList = document.getElementById('activity-list');
@@ -18,13 +37,18 @@ function displayActivity() {
     // Get current day of week
     const dayOfWeek = today.getDay();
     
-    // If not Thursday (4) or Saturday (6), show "No Footwork Training Today"
+    // If not training day, show next training date
     if (dayOfWeek !== 4 && dayOfWeek !== 6) {
-        activityList.innerHTML = '<div class="activity-card"><h3>No Footwork Training Today</h3></div>';
+        const nextTrainingDate = getNextTrainingDate();
+        activityList.innerHTML = `
+            <div class="activity-card">
+                <h3>No Footwork Training Today</h3>
+                <p>Next training session is ${nextTrainingDate}</p>
+            </div>`;
         return;
     }
 
-    // If it is a training day (Thursday or Saturday), show the activity
+    // If it is a training day, show the activity
     activityList.innerHTML = `
         <div class="activity-card">
             <h3>20 Min Footwork</h3>
