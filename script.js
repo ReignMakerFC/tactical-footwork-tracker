@@ -5,10 +5,9 @@ function getNextTrainingDate() {
     // Keep adding days until we hit a Thursday or Saturday
     while (true) {
         nextDate.setDate(nextDate.getDate() + 1);
-        if (nextDate.getDay() === 5 || nextDate.getDay() === 7) { // 4 is Thursday, 6 is Saturday
+        if (nextDate.getDay() === 5 || nextDate.getDay() === 0) { // 4 is Thursday, 6 is Saturday
             break;
         }
-    }
     
     return nextDate.toLocaleDateString('en-US', { 
         weekday: 'long',
@@ -38,7 +37,7 @@ function displayActivity() {
     const dayOfWeek = today.getDay();
     
     // If not training day, show next training date
-    if (dayOfWeek !== 5 && dayOfWeek !== 7) {
+    if (dayOfWeek !== 5 && dayOfWeek !== 0) {
         const nextTrainingDate = getNextTrainingDate();
         activityList.innerHTML = `
             <div class="activity-card">
