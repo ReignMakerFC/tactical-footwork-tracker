@@ -1,4 +1,3 @@
-// script.js
 // Function to generate all Thursday and Saturday dates for August 2025
 function getAugust2025Activities() {
     const activities = [];
