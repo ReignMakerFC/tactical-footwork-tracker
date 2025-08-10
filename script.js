@@ -42,10 +42,10 @@ function displayHistory() {
     historyDiv.className = 'training-history';
     historyDiv.innerHTML = '<h3>Training History</h3>';
 
-    // Set start date to August 10, 2023
+    // Set start date to August 10, 2025
     const dates = [];
     const today = new Date();
-    const startDate = new Date(2023, 7, 10); // Month is 0-based, so 7 = August
+    const startDate = new Date(2025, 7, 10); // Month is 0-based, so 7 = August
 
     for (let d = new Date(startDate); d <= today; d.setDate(d.getDate() + 1)) {
         if (d.getDay() === 5 || d.getDay() === 0) { // Friday or Sunday
