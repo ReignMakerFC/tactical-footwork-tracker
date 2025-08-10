@@ -42,13 +42,12 @@ function displayHistory() {
     historyDiv.className = 'training-history';
     historyDiv.innerHTML = '<h3>Training History</h3>';
 
-    // Get all training dates from the past 30 days
+    // Set start date to August 10, 2023
     const dates = [];
     const today = new Date();
-    const thirtyDaysAgo = new Date(today);
-    thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+    const startDate = new Date(2023, 7, 10); // Month is 0-based, so 7 = August
 
-    for (let d = new Date(thirtyDaysAgo); d <= today; d.setDate(d.getDate() + 1)) {
+    for (let d = new Date(startDate); d <= today; d.setDate(d.getDate() + 1)) {
         if (d.getDay() === 5 || d.getDay() === 0) { // Friday or Sunday
             dates.push(new Date(d));
         }
